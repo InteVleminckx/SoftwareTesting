@@ -1,6 +1,8 @@
 package jpacman.model;
 
 
+import java.util.ArrayList;
+
 /**
  * A Cell keeps track of its (x,y) position on the board, and the potential
  * Guest occupying the Cell. It's responsibilities include identifying
@@ -185,5 +187,22 @@ public class Cell {
     public Board getBoard() {
         assert invariant();
         return board;
+    }
+
+    public boolean adjacent(Cell otherCell) {
+        assert invariant();
+
+        if (otherCell == null || this.board != otherCell.getBoard()) {
+            return false;
+        }
+        if (otherCell.getY() == this.getY()) {
+            return otherCell.getX() - 1 == this.getX() || otherCell.getX() + 1 == this.getX();
+        }
+        else if (otherCell.getX() == this.getX()) {
+            return otherCell.getY() - 1 == this.getY() || otherCell.getY() + 1 == this.getY();
+        }
+
+        assert invariant();
+        return false;
     }
 }
