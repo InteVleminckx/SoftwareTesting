@@ -110,12 +110,10 @@ public abstract class Guest {
      * whether this is possible, and modify the move's state to indicate what
      * the effect of such a move would be. Precondition: the move object is non
      * null and initializing.
-     * <p>
-     *
+     * <p></p>
      * @param aMove
      *            theMove move object representing intended move and its
      *            effects.
-     *
      * @return True iff this guest has no objection to the player taking his
      *         place.
      */

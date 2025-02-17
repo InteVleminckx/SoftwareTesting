@@ -13,7 +13,7 @@ import org.junit.Before;
  * various instance variables to access parts of the
  * board. Typical clients of this class will inherit
  * the game and its content from this class.
- * <p>
+ * <p></p>
  * @author Arie van Deursen; Aug 23, 2003
  * @version $Id: GameTestCase.java,v 1.6 2008/02/10 12:51:55 arie Exp $
  */

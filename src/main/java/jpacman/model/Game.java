@@ -7,7 +7,7 @@ import java.util.Vector;
  * include the correct movement of moving guests, and keeping track of the state
  * of the game (whether the player died, or whether everything has been eaten,
  * for example)
- * <p>
+ * <p></p>
  *
  * @author Arie van Deursen; Aug 24, 2003
  * @version $Id: Game.java,v 1.10 2008/02/10 20:46:01 arie Exp $
