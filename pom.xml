@@ -47,47 +47,41 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <!-- Change version 2.3 to 3 to make -disableassertions argument work -->
-        <version>3.0.0-M7</version>
+        <version>3.0.0</version>
         <configuration>
-          <forkMode>pertest</forkMode>
+          <forkCount>1</forkCount> <!-- Use 1 fork for tests -->
+          <reuseForks>true</reuseForks> <!-- Reuse forks for efficiency -->
           <!-- change -enableassertions to -disableassertions to disable the assertions -->
-          <argLine>-enableassertions</argLine>
+          <!-- @{argLine} makes JaCoCo works, otherwise it won't be triggered:
+            This ensures that the JaCoCo agent is included in the JVM arguments for the test execution.
+            The token @{argLine} is a placeholder that expands to the existing argLine values.
+            Appending -enableassertions afterward prevents overwriting the Jacoco agent configuration, which is essential for generating the jacoco.exec file.
+          -->
+          <argLine>@{argLine} -enableassertions</argLine>
         </configuration>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.11.2</version>
-      </plugin>
-
       <!-- Add jacoco -->
-<!--      <plugin>-->
-<!--        <groupId>org.jacoco</groupId>-->
-<!--        <artifactId>jacoco-maven-plugin</artifactId>-->
-<!--        <version>0.8.10</version>-->
-<!--      </plugin>-->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
         <executions>
           <execution>
-            <id>default-prepare-agent</id>
+            <id>prepare-agent</id>
+            <phase>test-compile</phase>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
+            <configuration>
+              <destFile>${project.build.directory}/jacoco.exec</destFile>
+            </configuration>
           </execution>
           <execution>
-            <id>default-report</id>
+            <id>report</id>
+            <phase>verify</phase>
             <goals>
               <goal>report</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>default-check</id>
-            <goals>
-              <goal>check</goal>
             </goals>
           </execution>
         </executions>
@@ -107,18 +101,6 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <!-- Adding a version -->
         <version>3.11.2</version>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <!-- select non-aggregate reports -->
-              <report>report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
       </plugin>
     </plugins>
   </reporting>
