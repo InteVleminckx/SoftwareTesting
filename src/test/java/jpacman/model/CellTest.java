@@ -1,7 +1,5 @@
 package jpacman.model;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,8 +39,6 @@ public class CellTest {
         // put the cell on an invariant boundary value.
         aCell = new Cell(0, height - 1, aBoard);
     }
-
-
 
     /**
      * Test obtaining a cell at a given offset. Ensure both postconditions

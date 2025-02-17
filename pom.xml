@@ -46,9 +46,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.3</version>
+        <!-- Change version 2.3 to 3 to make -disableassertions argument work -->
+        <version>3.0.0-M7</version>
         <configuration>
           <forkMode>pertest</forkMode>
+          <!-- change -enableassertions to -disableassertions to disable the assertions -->
           <argLine>-enableassertions</argLine>
         </configuration>
       </plugin>
@@ -59,6 +61,37 @@
         <version>3.11.2</version>
       </plugin>
 
+      <!-- Add jacoco -->
+<!--      <plugin>-->
+<!--        <groupId>org.jacoco</groupId>-->
+<!--        <artifactId>jacoco-maven-plugin</artifactId>-->
+<!--        <version>0.8.10</version>-->
+<!--      </plugin>-->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.12</version>
+        <executions>
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -74,6 +107,18 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <!-- Adding a version -->
         <version>3.11.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- select non-aggregate reports -->
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
     </plugins>
   </reporting>
