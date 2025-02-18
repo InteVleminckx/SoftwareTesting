@@ -189,6 +189,11 @@ public class Cell {
         return board;
     }
 
+    /**
+     * Determine if the other cell is an immediate neighbour
+     * of the current cell (up, down, left, or right).
+     * @return true if the other cell is immediately adjacent.
+     */
     public boolean adjacent(Cell otherCell) {
         assert invariant();
 
