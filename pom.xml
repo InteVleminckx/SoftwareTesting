@@ -15,6 +15,18 @@
       <version>4.4</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.3.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jmockit</groupId>
+      <artifactId>jmockit</artifactId>
+      <version>1.49</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -79,7 +91,7 @@
           </execution>
           <execution>
             <id>report</id>
-            <phase>verify</phase>
+            <phase>site</phase>
             <goals>
               <goal>report</goal>
             </goals>
