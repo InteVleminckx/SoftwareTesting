@@ -59,8 +59,9 @@
         <!-- Change version 2.3 to 3 to make -disableassertions argument work -->
         <version>3.0.0</version>
         <configuration>
-          <forkCount>1</forkCount> <!-- Use 1 fork for tests -->
-          <reuseForks>true</reuseForks> <!-- Reuse forks for efficiency -->
+          <!-- forkMode deprecated, use the two other tags instead -->
+          <forkCount>1</forkCount>
+          <reuseForks>false</reuseForks>
           <!-- change -enableassertions to -disableassertions to disable the assertions -->
           <!-- @{argLine} makes JaCoCo works, otherwise it won't be triggered:
             This ensures that the JaCoCo agent is included in the JVM arguments for the test execution.
