@@ -80,6 +80,7 @@
         <executions>
           <execution>
             <id>prepare-agent</id>
+            <!-- Runs before tests to attach JaCoCo agent for code instrumentation and coverage collection. -->
             <phase>test-compile</phase>
             <goals>
               <goal>prepare-agent</goal>
@@ -90,6 +91,7 @@
           </execution>
           <execution>
             <id>report</id>
+            <!-- Runs during site generation to create the test coverage report after test execution. -->
             <phase>site</phase>
             <goals>
               <goal>report</goal>
