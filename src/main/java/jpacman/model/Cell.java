@@ -198,12 +198,15 @@ public class Cell {
         assert invariant();
 
         if (otherCell == null || this.board != otherCell.getBoard()) {
+            assert invariant();
             return false;
         }
         if (otherCell.getY() == this.getY()) {
+            assert invariant();
             return otherCell.getX() - 1 == this.getX() || otherCell.getX() + 1 == this.getX();
         }
         else if (otherCell.getX() == this.getX()) {
+            assert invariant();
             return otherCell.getY() - 1 == this.getY() || otherCell.getY() + 1 == this.getY();
         }
 
