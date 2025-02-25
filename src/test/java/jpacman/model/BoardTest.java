@@ -2,6 +2,7 @@ package jpacman.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -110,6 +111,21 @@ public class BoardTest {
             assertTrue(failureGenerated);
         }
         // else: nothing to test -- no guarantees what so ever!
+    }
+
+    @Test
+    public void testWithinBorders() {
+        assertTrue(theBoard.withinBorders(0, 0));
+        assertTrue(theBoard.withinBorders(width - 1, height - 1));
+        assertTrue(theBoard.withinBorders(2, 5));
+
+        assertFalse(theBoard.withinBorders(-1, 0));
+        assertFalse(theBoard.withinBorders(width, 0));
+        assertFalse(theBoard.withinBorders(0, -1));
+        assertFalse(theBoard.withinBorders(0, height));
+
+        assertFalse(theBoard.withinBorders(width, height - 1));
+        assertFalse(theBoard.withinBorders(width - 1, height));
     }
 
 

@@ -143,6 +143,8 @@ public class Board {
     public boolean withinBorders(int x, int y) {
          // TODO actual implementation left as an exercise.
          return true;
+         // assert invariant();
+         // return x >= 0 && x < width && y >= 0 && y < height;
     }
 
     /**
