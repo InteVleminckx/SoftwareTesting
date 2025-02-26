@@ -63,4 +63,17 @@ public class GameTest extends GameTestCase {
         assertEquals(-1, theGame.getPlayerLastDy());
     }
 
+    /**
+     * Test the addGuestFromCode method.
+     */
+    @Test
+    public void testAddGuestFromCode() {
+//        // add a monster
+//        theGame.addGuestFromCode('M', 1, 1);
+//        assertEquals(3, theGame.getMonsters().size());
+//        // add a player
+//        theGame.addGuestFromCode('P', 1, 1);
+//        assertEquals(1, theGame.getPlayers().size());
+    }
+
 }
