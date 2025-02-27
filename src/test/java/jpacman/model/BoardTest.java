@@ -114,19 +114,31 @@ public class BoardTest {
     }
 
     @Test
-    public void testWithinBorders() {
-        assertTrue(theBoard.withinBorders(0, 0));
-        assertTrue(theBoard.withinBorders(width - 1, height - 1));
-        assertTrue(theBoard.withinBorders(2, 5));
+    public void testWithinBordersX() {
 
-        assertFalse(theBoard.withinBorders(-1, 0));
-        assertFalse(theBoard.withinBorders(width, 0));
-        assertFalse(theBoard.withinBorders(0, -1));
-        assertFalse(theBoard.withinBorders(0, height));
+        int y = height - 1;
 
-        assertFalse(theBoard.withinBorders(width, height - 1));
-        assertFalse(theBoard.withinBorders(width - 1, height));
+        assertTrue(theBoard.withinBorders(0, y));
+        assertFalse(theBoard.withinBorders(-1, y));
+        assertFalse(theBoard.withinBorders(width + 1, y));
+        assertTrue(theBoard.withinBorders(width - 2, y));
+        assertTrue(theBoard.withinBorders(width - 1, y));
+        assertFalse(theBoard.withinBorders(width, y));
+        assertFalse(theBoard.withinBorders(-2, y));
     }
 
 
+    @Test
+    public void testWithinBordersY() {
+
+        int x = width - 1;
+
+        assertTrue(theBoard.withinBorders(x, 0));
+        assertFalse(theBoard.withinBorders(x, -1));
+        assertFalse(theBoard.withinBorders(x, height + 1));
+        assertTrue(theBoard.withinBorders(x, height - 2));
+        assertTrue(theBoard.withinBorders(x, height -1));
+        assertFalse(theBoard.withinBorders(x, height));
+        assertFalse(theBoard.withinBorders(x, -2));
+    }
 }
