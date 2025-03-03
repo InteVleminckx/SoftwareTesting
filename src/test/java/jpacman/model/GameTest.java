@@ -1,7 +1,9 @@
 package jpacman.model;
 
+import java.util.Objects;
 import java.util.Vector;
 
+import jpacman.TestUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -66,15 +68,38 @@ public class GameTest extends GameTestCase {
      */
     @Test
     public void testAddGuestFromCode() {
-        String[] theMap = {
-        "WWWW",
-        "W0PW",
-        "WF0W",
-        "WWWW"
-    };
-        Game newGame = new Game(theMap);
+
+        // map with only known code values
+        String[] newMap = {
+            "WWWW",
+            "WMPW",
+            "WF0W",
+            "WWWW"
+        };
+        Game newGame = new Game(newMap);
+        // Check if Game object is created
         assertNotNull(newGame);
 
-    }
+        char code = 'A';
+        // map with an unknown code value 'A'
+        newMap = new String[] {
+                "WWWW",
+                "W" + code + "PW",
+                "WF0W",
+                "WWWW"
+        };
 
+        if (TestUtils.assertionsEnabled()) {
+            // catch assertion errors
+            boolean failureGenerated;
+            try {
+                newGame = new Game(newMap);
+                failureGenerated = false;
+            } catch (AssertionError e) {
+                String assertionErrorMsg = "unknown cell type``" + code + "'' in worldmap";
+                failureGenerated = Objects.equals(e.getMessage(), assertionErrorMsg);
+            }
+            assertTrue(failureGenerated);
+        }
+    }
 }
