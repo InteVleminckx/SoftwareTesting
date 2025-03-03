@@ -127,7 +127,6 @@ public class BoardTest {
         assertFalse(theBoard.withinBorders(-2, y));
     }
 
-
     @Test
     public void testWithinBordersY() {
 
@@ -140,5 +139,6 @@ public class BoardTest {
         assertTrue(theBoard.withinBorders(x, height -1));
         assertFalse(theBoard.withinBorders(x, height));
         assertFalse(theBoard.withinBorders(x, -2));
+
     }
 }

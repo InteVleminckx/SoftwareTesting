@@ -1,12 +1,10 @@
 package jpacman.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-
 import java.util.Vector;
 
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Series of test cases for the game itself.
@@ -68,12 +66,15 @@ public class GameTest extends GameTestCase {
      */
     @Test
     public void testAddGuestFromCode() {
-//        // add a monster
-//        theGame.addGuestFromCode('M', 1, 1);
-//        assertEquals(3, theGame.getMonsters().size());
-//        // add a player
-//        theGame.addGuestFromCode('P', 1, 1);
-//        assertEquals(1, theGame.getPlayers().size());
+        String[] theMap = {
+        "WWWW",
+        "W0PW",
+        "WF0W",
+        "WWWW"
+    };
+        Game newGame = new Game(theMap);
+        assertNotNull(newGame);
+
     }
 
 }
