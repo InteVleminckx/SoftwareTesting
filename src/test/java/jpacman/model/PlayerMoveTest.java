@@ -49,4 +49,69 @@ public class PlayerMoveTest extends MoveTest {
         aPlayerMove = new PlayerMove(thePlayer, target);
         return aPlayerMove;
     }
+
+
+    /**
+     * Test moving to an empty cell within borders (valid move).
+     */
+    @Test
+    public void testMoveToEmptyCell() {
+        PlayerMove playerMove = createMove(emptyCell);
+        assertTrue(playerMove.movePossible());
+        assertFalse(playerMove.playerDies());
+        assertEquals(0, playerMove.getFoodEaten());
+    }
+
+    /**
+     * Test moving to a food cell within borders.
+     */
+    @Test
+    public void testMoveToFoodCell() {
+        PlayerMove playerMove = createMove(foodCell);
+
+        assertTrue(foodCell.getInhabitant() instanceof Food);
+        assertEquals(Guest.FOOD_TYPE, foodCell.getInhabitant().guestType());
+
+
+        assertTrue(playerMove.movePossible());
+        assertFalse(playerMove.playerDies());
+        assertEquals(1, playerMove.getFoodEaten());
+    }
+
+    /**
+     * Test moving to a wall (should be blocked).
+     */
+    @Test
+    public void testMoveToWall() {
+        PlayerMove playerMove = createMove(wallCell);
+        assertFalse(playerMove.movePossible());
+        assertFalse(playerMove.playerDies());
+        assertEquals(0, playerMove.getFoodEaten());
+    }
+
+    /**
+     * Test moving to a monster (player dies).
+     */
+    @Test
+    public void testMoveToMonster() {
+        PlayerMove playerMove = createMove(monsterCell);
+        assertFalse(playerMove.movePossible()); // Player can move to monster?
+        assertTrue(playerMove.playerDies());
+        assertEquals(0, playerMove.getFoodEaten());
+    }
+
+//    /**
+//     * Test moving out of bounds (should be blocked).
+//     */
+//    @Test
+//    public void testMoveOutOfBounds() {
+//        // Simulating an invalid move
+//        Board board = new Board(2, 2);
+//        Cell outOfBoundsCell = new Cell(2, 0, board);
+//        PlayerMove playerMove = createMove(outOfBoundsCell);
+//        assertFalse(playerMove.movePossible());
+//        assertFalse(playerMove.playerDies());
+//    }
+
+
 }
