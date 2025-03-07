@@ -51,9 +51,6 @@ public class PlayerMoveTest extends MoveTest {
     }
 
 
-    /**
-     * Test moving to an empty cell within borders (valid move).
-     */
     @Test
     public void testMoveToEmptyCell() {
         PlayerMove playerMove = createMove(emptyCell);
@@ -62,9 +59,6 @@ public class PlayerMoveTest extends MoveTest {
         assertEquals(0, playerMove.getFoodEaten());
     }
 
-    /**
-     * Test moving to a food cell within borders.
-     */
     @Test
     public void testMoveToFoodCell() {
         PlayerMove playerMove = createMove(foodCell);
@@ -78,9 +72,6 @@ public class PlayerMoveTest extends MoveTest {
         assertEquals(1, playerMove.getFoodEaten());
     }
 
-    /**
-     * Test moving to a wall (should be blocked).
-     */
     @Test
     public void testMoveToWall() {
         PlayerMove playerMove = createMove(wallCell);
@@ -89,9 +80,6 @@ public class PlayerMoveTest extends MoveTest {
         assertEquals(0, playerMove.getFoodEaten());
     }
 
-    /**
-     * Test moving to a monster (player dies).
-     */
     @Test
     public void testMoveToMonster() {
         PlayerMove playerMove = createMove(monsterCell);
@@ -100,9 +88,8 @@ public class PlayerMoveTest extends MoveTest {
         assertEquals(0, playerMove.getFoodEaten());
     }
 
-//    /**
-//     * Test moving out of bounds (should be blocked).
-//     */
+
+
 //    @Test
 //    public void testMoveOutOfBounds() {
 //        // Simulating an invalid move
