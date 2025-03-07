@@ -69,6 +69,15 @@ public class Food extends Guest {
         return true;
     }
 
+    @Override
+    protected boolean meetMonster(MonsterMove theMove) {
+        assert theMove != null;
+        assert !theMove.initialized();
+
+        // Monster moves over food, but doesn't consume it.
+        return true; // Move allowed.
+    }
+
 
     /**
      * @see jpacman.model.Guest#guestType()

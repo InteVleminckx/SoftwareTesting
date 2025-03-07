@@ -34,6 +34,14 @@ public class Monster extends MovingGuest {
         return false;
     }
 
+    @Override
+    protected boolean meetMonster(MonsterMove theMove) {
+        assert theMove != null;
+        assert !theMove.initialized();
+
+        return false; // Monsters cannot move into each other.
+    }
+
     /**
      * @see jpacman.model.Guest#guestType()
      * @return Character encoding for a monster.

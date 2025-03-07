@@ -108,6 +108,17 @@ public class Player extends MovingGuest {
         return false;
     }
 
+    @Override
+    protected boolean meetMonster(MonsterMove theMove) {
+        assert playerInvariant();
+        assert theMove != null;
+        assert !theMove.initialized();
+
+        // If a monster moves into a player, the player dies.
+        theMove.die();
+        return true; // Monster can move to this cell.
+    }
+
 
     /**
      * @see jpacman.model.Guest#guestType()
