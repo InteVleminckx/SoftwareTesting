@@ -37,7 +37,6 @@ public class PlayerMoveTest extends MoveTest {
         assertTrue(playerMove.invariant());
     }
 
-
     /**
      * Create a move object that will be tested.
      *  @see jpacman.model.MoveTest#createMove(jpacman.model.Cell)
@@ -66,10 +65,17 @@ public class PlayerMoveTest extends MoveTest {
         assertTrue(foodCell.getInhabitant() instanceof Food);
         assertEquals(Guest.FOOD_TYPE, foodCell.getInhabitant().guestType());
 
-
         assertTrue(playerMove.movePossible());
         assertFalse(playerMove.playerDies());
         assertEquals(1, playerMove.getFoodEaten());
+    }
+
+    @Test
+    public void testMoveToMonster() {
+        PlayerMove playerMove = createMove(monsterCell);
+        assertFalse(playerMove.movePossible()); // Player can't (actually) move to monster, but dies
+        assertTrue(playerMove.playerDies());
+        assertEquals(0, playerMove.getFoodEaten());
     }
 
     @Test
@@ -81,24 +87,22 @@ public class PlayerMoveTest extends MoveTest {
     }
 
     @Test
-    public void testMoveToMonster() {
-        PlayerMove playerMove = createMove(monsterCell);
-        assertFalse(playerMove.movePossible()); // Player can move to monster?
-        assertTrue(playerMove.playerDies());
+    public void testMoveToPlayer() {
+        PlayerMove playerMove = createMove(playerCell);
+        assertFalse(playerMove.movePossible());
+        assertFalse(playerMove.playerDies());
         assertEquals(0, playerMove.getFoodEaten());
     }
 
-
-
-//    @Test
-//    public void testMoveOutOfBounds() {
-//        // Simulating an invalid move
-//        Board board = new Board(2, 2);
-//        Cell outOfBoundsCell = new Cell(2, 0, board);
-//        PlayerMove playerMove = createMove(outOfBoundsCell);
-//        assertFalse(playerMove.movePossible());
-//        assertFalse(playerMove.playerDies());
-//    }
-
+    //    TODO: Probs can be removed -> check later
+    //    @Test
+    //    public void testMoveOutOfBounds() {
+    //        // Simulating an invalid move
+    //        Board board = new Board(2, 2);
+    //        Cell outOfBoundsCell = new Cell(2, 0, board);
+    //        PlayerMove playerMove = createMove(outOfBoundsCell);
+    //        assertFalse(playerMove.movePossible());
+    //        assertFalse(playerMove.playerDies());
+    //    }
 
 }

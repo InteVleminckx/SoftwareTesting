@@ -34,8 +34,7 @@ public class MonsterMoveTest extends MoveTest {
         assertEquals(1, playerMove.getFoodEaten());
         assertTrue(playerMove.invariant());
     }
-
-
+    
     /**
      * Create a move object that will be tested.
      *  @see MoveTest#createMove(Cell)
@@ -47,7 +46,6 @@ public class MonsterMoveTest extends MoveTest {
         aMonsterMove = new MonsterMove(theMonster, target);
         return aMonsterMove;
     }
-
 
     @Test
     public void testMoveToEmptyCell() {
@@ -62,7 +60,6 @@ public class MonsterMoveTest extends MoveTest {
         assertTrue(foodCell.getInhabitant() instanceof Food);
         assertEquals(Guest.FOOD_TYPE, foodCell.getInhabitant().guestType());
 
-
         assertTrue(monsterMove.movePossible());
     }
 
@@ -75,20 +72,13 @@ public class MonsterMoveTest extends MoveTest {
     @Test
     public void testMoveToMonster() {
         MonsterMove monsterMove = createMove(monsterCell);
-        assertFalse(monsterMove.movePossible()); // Player can move to monster?
+        assertFalse(monsterMove.movePossible());
     }
 
-
-
-//    @Test
-//    public void testMoveOutOfBounds() {
-//        // Simulating an invalid move
-//        Board board = new Board(2, 2);
-//        Cell outOfBoundsCell = new Cell(2, 0, board);
-//        PlayerMove playerMove = createMove(outOfBoundsCell);
-//        assertFalse(playerMove.movePossible());
-//        assertFalse(playerMove.playerDies());
-//    }
-
-
+    @Test
+    public void testMoveToPlayer() {
+        MonsterMove monsterMove = createMove(playerCell);
+        assertFalse(monsterMove.movePossible());  // Monster can't (actually) move to player, but player dies
+        assertTrue(monsterMove.playerDies());
+    }
 }

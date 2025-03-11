@@ -36,6 +36,7 @@ public class Monster extends MovingGuest {
 
     @Override
     protected boolean meetMonster(MonsterMove theMove) {
+        assert guestInvariant();
         assert theMove != null;
         assert !theMove.initialized();
 

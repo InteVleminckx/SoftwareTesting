@@ -1,24 +1,21 @@
 package jpacman.model;
 
 /**
- * Class to represent the effects of moving the player.
+ * Class to represent the effects of moving the monster.
  *
- * @author Arie van Deursen; Aug 18, 2003
- * @version $Id: PlayerMove.java,v 1.6 2008/02/11 13:05:20 arie Exp $
  */
 public class MonsterMove extends Move {
 
     /**
-     * The player wishing to move.
+     * The monster wishing to move.
      */
     private Monster theMonster;
 
-
     /**
-     * Create a move for the given player to a given target cell.
+     * Create a move for the given monster to a given target cell.
      *
      * @param monster
-     *            the Player to be moved
+     *            the Monster to be moved
      * @param newCell
      *            the target location.
      * @see Move
@@ -33,8 +30,7 @@ public class MonsterMove extends Move {
     }
 
     /**
-     * Verify that the food eaten remains non negative, the player/mover equal
-     * and non-null.
+     * Verify that the monster/mover equal and non-null.
      *
      * @return true iff the invariant holds.
      */
@@ -44,8 +40,8 @@ public class MonsterMove extends Move {
     }
 
     /**
-     * Attempt to move the player towards a target guest.
-     * @param targetGuest The guest that the player will meet.
+     * Attempt to move the monster towards a target guest.
+     * @param targetGuest The guest that the monster will meet.
      * @return true if the move is possible, false otherwise.
      * @see Move#tryMoveToGuest(Guest)
      */
@@ -57,9 +53,9 @@ public class MonsterMove extends Move {
     }
 
     /**
-     * Return the player initiating this move.
+     * Return the monster initiating this move.
      *
-     * @return The moving player.
+     * @return The moving monster.
      */
     public Monster getMonster() {
         assert invariant();
@@ -73,6 +69,5 @@ public class MonsterMove extends Move {
         super.apply();
         assert invariant();
     }
-
 
 }

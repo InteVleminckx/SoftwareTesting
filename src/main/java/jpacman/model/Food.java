@@ -71,6 +71,7 @@ public class Food extends Guest {
 
     @Override
     protected boolean meetMonster(MonsterMove theMove) {
+        assert foodInvariant();
         assert theMove != null;
         assert !theMove.initialized();
 

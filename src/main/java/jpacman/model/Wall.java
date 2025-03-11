@@ -32,6 +32,7 @@ public class Wall extends Guest {
 
     @Override
     protected boolean meetMonster(MonsterMove theMove) {
+        assert guestInvariant();
         assert theMove != null;
         assert !theMove.initialized();
 
