@@ -94,15 +94,4 @@ public class PlayerMoveTest extends MoveTest {
         assertEquals(0, playerMove.getFoodEaten());
     }
 
-    //    TODO: Probs can be removed -> check later
-    //    @Test
-    //    public void testMoveOutOfBounds() {
-    //        // Simulating an invalid move
-    //        Board board = new Board(2, 2);
-    //        Cell outOfBoundsCell = new Cell(2, 0, board);
-    //        PlayerMove playerMove = createMove(outOfBoundsCell);
-    //        assertFalse(playerMove.movePossible());
-    //        assertFalse(playerMove.playerDies());
-    //    }
-
 }

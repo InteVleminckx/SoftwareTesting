@@ -116,7 +116,7 @@ public class Player extends MovingGuest {
 
         // If a monster moves into a player, the player dies.
         theMove.die();
-        return true; // Monster can move to this cell.
+        return false; // Monster can't (actually) move to this cell.
     }
 
 
