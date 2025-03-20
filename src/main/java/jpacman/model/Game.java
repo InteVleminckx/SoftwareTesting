@@ -279,6 +279,15 @@ public class Game {
         assert invariant();
     }
 
+    void moveMonster(Monster monster, int dx, int dy) {
+        assert invariant();
+        assert !gameOver() : "can only move when game isn't over";
+        Cell targetCell =
+                monster.getLocation().cellAtOffset(dx, dy);
+        MonsterMove monsterMove = new MonsterMove(monster, targetCell);
+        applyMove(monsterMove);
+        assert invariant();
+    }
 
     /**
      * Actually apply the given move, if it is possible.
