@@ -151,4 +151,12 @@ public class Player extends MovingGuest {
     public int getLastDy() {
         return lastDy;
     }
+
+    public void revive() {
+        assert playerInvariant();
+        assert !living();
+        alive = true;
+        assert living();
+        assert playerInvariant();
+    }
 }

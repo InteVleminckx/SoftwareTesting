@@ -171,6 +171,18 @@ public class Engine extends Observable {
         assert invariant() : "Invariant invalid after updating the viewers";
     }
 
+    public synchronized void undo() {
+        assert invariant();
+
+        if (inPlayingState() || inHaltedState() || inDiedState()) {
+            theGame.undoMove();
+            halted = true;
+            notifyViewers();
+        }
+
+        assert invariant() : "Invariant invalid after updating the viewers";
+    }
+
     /**
      * Try to move the player along a given offset.
      *

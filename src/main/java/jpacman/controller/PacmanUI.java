@@ -92,8 +92,6 @@ public class PacmanUI extends JFrame implements KeyListener, Observer {
             }
         });
 
-
-
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -101,10 +99,19 @@ public class PacmanUI extends JFrame implements KeyListener, Observer {
             }
         });
 
+        JButton undoButton = new JButton("Undo");
+        undoButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                getController().undo();
+            }
+        });
+
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);
         buttonPanel.add(quitButton);
         buttonPanel.add(exitButton);
+        buttonPanel.add(undoButton);
 
         JLabel pointsLabel = new JLabel("Food eaten: ");
         final int eatenWidth = 5;

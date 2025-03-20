@@ -1,11 +1,8 @@
 package jpacman.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * This class offers a test suite for the Move class hierarchy
@@ -58,7 +55,6 @@ public abstract class MoveTest extends GameTestCase {
 
     }
 
-
     /**
      * Create a move object.
      * The actual guest to be moved (to the target Cell)
@@ -69,4 +65,39 @@ public abstract class MoveTest extends GameTestCase {
      * @return Instantiated Move subclass object.
      */
     protected abstract Move createMove(Cell target);
+
+
+    @Test
+    public void testUndoEmptyCell() {
+        Move move = new PlayerMove(thePlayer, emptyCell);
+        move.apply();
+        move.undo();
+        assertEquals(playerCell, thePlayer.getLocation());
+        assertNull(emptyCell.getInhabitant());
+
+        move = new MonsterMove(theMonster, emptyCell);
+        move.apply();
+        move.undo();
+        assertEquals(monsterCell, theMonster.getLocation());
+        assertNull(emptyCell.getInhabitant());
+    }
+
+    @Test
+    public void testUndoFoodCell() {
+        Move move = new PlayerMove(thePlayer, foodCell);
+        int current_points = thePlayer.getPointsEaten();
+        move.apply();
+        assertEquals(current_points + theFood.getPoints(), thePlayer.getPointsEaten());
+        move.undo();
+        assertEquals(current_points, thePlayer.getPointsEaten());
+        assertEquals(playerCell, thePlayer.getLocation());
+        assertEquals(theFood, foodCell.getInhabitant());
+
+        move = new MonsterMove(theMonster, foodCell);
+        move.apply();
+        move.undo();
+        assertEquals(monsterCell, theMonster.getLocation());
+        assertEquals(theFood, foodCell.getInhabitant());
+    }
+
 }

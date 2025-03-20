@@ -124,6 +124,15 @@ public class Pacman {
         assert invariant();
     }
 
+    public void undo() {
+        assert invariant();
+        monsterTicker.stop();
+        theEngine.undo();
+        theAnimator.stop();
+        assert invariant();
+    }
+
+
     /**
      * Respond to an up request from the GUI.
      */

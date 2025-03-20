@@ -1,6 +1,7 @@
 package jpacman.model;
 
 import java.util.Vector;
+import java.util.Stack;
 
 /**
  * Representation of the board and its guests. This class's responsibilities
@@ -39,6 +40,7 @@ public class Game {
      */
     private String[] theMap;
 
+    private Stack<Move> moveStack;
 
     /**
      * Create a new Game using a default map.
@@ -65,6 +67,7 @@ public class Game {
         totalPoints = 0;
         thePlayer = null;
         theBoard = null;
+        moveStack = new Stack<>();
         loadWorld(theMap);
         assert invariant();
     }
@@ -299,12 +302,14 @@ public class Game {
         assert !gameOver();
         if (move.movePossible()) {
             move.apply();
+            moveStack.push(move);
             assert move.moveDone();
             assert !playerDied() : "move possible => not killed";
         } else {
             if (move.playerDies()) {
                 assert !playerWon() : "you can't win by dying";
                 getPlayer().die();
+                moveStack.push(move);
                 assert playerDied();
             }
         }
@@ -387,5 +392,27 @@ public class Game {
      */
     public char getGuestCode(int x, int y) {
         return getBoard().guestCode(x, y);
+    }
+
+    public void undoMove() {
+        assert initialized();
+        assert moveStack != null;
+
+        if (moveStack.isEmpty()) {
+            return;
+        }
+
+        Move lastMove;
+        do {
+            lastMove = moveStack.pop();
+            lastMove.undo();
+
+            if (lastMove.playerDies()) {
+                thePlayer.revive();
+            }
+
+        } while (lastMove instanceof MonsterMove && !moveStack.isEmpty());
+
+        assert invariant();
     }
 }

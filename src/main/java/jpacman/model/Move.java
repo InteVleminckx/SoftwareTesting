@@ -27,6 +27,10 @@ public abstract class Move {
      */
     private Cell to = null;
 
+    private Cell from = null;
+
+    private Guest toGuest = null;
+
     /**
      * Is the target cell indeed empty and reachable?
      */
@@ -60,6 +64,8 @@ public abstract class Move {
         || fromGuest.getLocation().getBoard() == toCell.getBoard();
         this.mover = fromGuest;
         this.to = toCell;
+        this.from = fromGuest.getLocation();
+        this.toGuest = to.getInhabitant();
         assert moveInvariant() : "Move invariant invalid";
     }
 
@@ -218,6 +224,21 @@ public abstract class Move {
         return to != null && mover.getLocation().equals(to);
     }
 
+    public void undo() {
+        assert mover != null;
+        assert to != null;
+        assert from != null;
 
+        mover.deoccupy();
+        mover.occupy(from); // put guest back to previous location
 
+        // Only if guest was moved to an occupied cell
+        if (toGuest != null) {
+            toGuest.occupy(to);
+            // Restore the food points eaten
+            if (toGuest instanceof Food && mover instanceof Player) {
+                ((Player) mover).eat(-((Food) toGuest).getPoints());
+            }
+        }
+    }
 }
