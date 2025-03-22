@@ -102,4 +102,16 @@ public class GameTest extends GameTestCase {
             assertTrue(failureGenerated);
         }
     }
+
+    @Test
+    public void testUndoMove() {
+        // move to left empty cell
+        theGame.movePlayer(1, 0);
+        // move to up empty cell
+        theGame.movePlayer(0, -1);
+        // undo the last move
+        theGame.undoMove();
+        assertEquals(1, theGame.getPlayerLastDx());
+        assertEquals(0, theGame.getPlayerLastDy());
+    }
 }
