@@ -1,6 +1,7 @@
 package jpacman.model;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -191,4 +192,46 @@ public class EngineTest extends GameTestCase {
         theEngine.moveMonster(monster, 1, 0); // Move monster right
         assertTrue(theEngine.inPlayingState());
     }
+
+    /**
+     * Test transition: Playing → Halted (Undo)
+     */
+    @Test
+    public void testUndoTransitionPlaying() {
+        assertTrue(theEngine.inStartingState());
+        theEngine.start();
+        assertTrue(theEngine.inPlayingState());
+        theEngine.undo();
+        assertTrue(theEngine.inHaltedState());
+    }
+
+    /**
+     * Test transition: Halted → Halted (Undo)
+     */
+    @Test
+    public void testUndoTransitionHalted() {
+        assertTrue(theEngine.inStartingState());
+        theEngine.start();
+        assertTrue(theEngine.inPlayingState());
+        theEngine.quit();
+        assertTrue(theEngine.inHaltedState());
+        theEngine.undo();
+        assertTrue(theEngine.inHaltedState());
+    }
+
+    /**
+     * Test transition: Player Died → Halted (Undo)
+     */
+    @Test
+    public void testUndoTransitionPlayerDied() {
+        assertTrue(theEngine.inStartingState());
+        theEngine.start();
+        assertTrue(theEngine.inPlayingState());
+        theEngine.movePlayer(0, 1);
+        assertTrue(theEngine.inDiedState());
+        theEngine.undo();
+        assertTrue(theEngine.inHaltedState());
+        assertFalse(theGame.playerDied());
+    }
+
 }

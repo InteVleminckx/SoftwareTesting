@@ -28,6 +28,8 @@ public class EngineSneakPathTest extends GameTestCase {
         Monster monster = theEngine.getMonsters().get(0);
         theEngine.moveMonster(monster, 0, -1);
         assertTrue(theEngine.inStartingState());
+        theEngine.undo();
+        assertTrue(theEngine.inStartingState());
     }
 
     @Test
@@ -85,6 +87,8 @@ public class EngineSneakPathTest extends GameTestCase {
         assertTrue(theEngine.inWonState());
         Monster monster = theEngine.getMonsters().get(0);
         theEngine.moveMonster(monster, 0, -1);
+        assertTrue(theEngine.inWonState());
+        theEngine.undo();
         assertTrue(theEngine.inWonState());
     }
 

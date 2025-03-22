@@ -233,10 +233,11 @@ public abstract class Move {
         mover.occupy(from); // put guest back to previous location
 
         // Only if guest was moved to an occupied cell
-        if (toGuest != null) {
+        if (toGuest != null && !(toGuest instanceof MovingGuest)) {
             toGuest.occupy(to);
             // Restore the food points eaten
-            if (toGuest instanceof Food && mover instanceof Player) {
+            if (mover instanceof Player) {
+                assert toGuest instanceof Food;
                 ((Player) mover).eat(-((Food) toGuest).getPoints());
             }
         }

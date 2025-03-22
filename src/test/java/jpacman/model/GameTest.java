@@ -105,13 +105,71 @@ public class GameTest extends GameTestCase {
 
     @Test
     public void testUndoMove() {
-        // move to left empty cell
-        theGame.movePlayer(1, 0);
-        // move to up empty cell
-        theGame.movePlayer(0, -1);
-        // undo the last move
+        Monster firstMonster = (Monster) theGame.getBoard().getCell(1, 2).getInhabitant();
+        Monster secondMonster = (Monster) theGame.getBoard().getCell(2, 3).getInhabitant();
+        // TEST: undo monster move before a player moved
+        assertTrue(theGame.getMoveStack().isEmpty());
+        theGame.moveMonster(secondMonster, 0, -1);
+        assertEquals(1, theGame.getMoveStack().size());
         theGame.undoMove();
-        assertEquals(1, theGame.getPlayerLastDx());
-        assertEquals(0, theGame.getPlayerLastDy());
+        assertTrue(theGame.getMoveStack().isEmpty());
+
+        // TEST: move player to food cell left and undo
+        assertTrue(theGame.getMoveStack().isEmpty());
+        theGame.movePlayer(-1, 0); // move to food cell left
+        assertEquals(1, theGame.getMoveStack().size());
+        theGame.undoMove();
+        assertTrue(theGame.getMoveStack().isEmpty());
+
+        // TEST: monster moves undone that were executed after a player has moved
+        theGame.movePlayer(-1, 0); // move to food cell left
+        assertEquals(1, theGame.getMoveStack().size());
+        theGame.moveMonster(secondMonster, 0, -1);
+        assertEquals(2, theGame.getMoveStack().size());
+        theGame.movePlayer(0, -1); // move to empty cell up
+        assertEquals(3, theGame.getMoveStack().size());
+        theGame.moveMonster(firstMonster, 0, -1);
+        assertEquals(4, theGame.getMoveStack().size());
+        theGame.moveMonster(secondMonster, 0, -1);
+        assertEquals(5, theGame.getMoveStack().size());
+        theGame.undoMove();
+        // 2 monster moves after a player move, so 3 moves should be removed from the stack
+        assertEquals(2, theGame.getMoveStack().size());
     }
+
+    @Test
+    public void testUndoPlayerDiedByMonster() {
+        Monster firstMonster = (Monster) theGame.getBoard().getCell(1, 2).getInhabitant();
+        assertTrue(theGame.getMoveStack().isEmpty());
+        theGame.movePlayer(1, 0);
+        assertEquals(1, theGame.getMoveStack().size());
+        theGame.moveMonster(firstMonster, 1, 0);
+        assertEquals(2, theGame.getMoveStack().size());
+        theGame.moveMonster(firstMonster, 0, -1);
+        assertEquals(3, theGame.getMoveStack().size());
+
+        assertTrue(theGame.playerDied());
+        theGame.undoMove();
+
+        assertEquals(0, theGame.getMoveStack().size());
+        assertFalse(theGame.playerDied());
+
+    }
+
+    @Test
+    public void testUndoPlayerDiedByItself() {
+        Monster firstMonster = (Monster) theGame.getBoard().getCell(1, 2).getInhabitant();
+        assertTrue(theGame.getMoveStack().isEmpty());
+        theGame.movePlayer(1, 0);
+        assertEquals(1, theGame.getMoveStack().size());
+        theGame.moveMonster(firstMonster, 1, 0);
+        assertEquals(2, theGame.getMoveStack().size());
+        theGame.movePlayer(0, 1);
+        assertTrue(theGame.playerDied());
+        assertEquals(3, theGame.getMoveStack().size());
+        theGame.undoMove();
+        assertEquals(2, theGame.getMoveStack().size());
+        assertFalse(theGame.playerDied());
+    }
+
 }

@@ -19,6 +19,9 @@ public class PlayerMove extends Move {
      */
     private int foodEaten = 0;
 
+    private int lastDx, lastDy;
+
+
     /**
      * Create a move for the given player to a given target cell.
      *
@@ -33,6 +36,8 @@ public class PlayerMove extends Move {
         // and cannot be repeated here ("super(...)" must be 1st stat.).
         super(player, newCell);
         thePlayer = player;
+        lastDx = thePlayer.getLastDx();
+        lastDy = thePlayer.getLastDy();
         precomputeEffects();
         assert invariant();
     }
@@ -105,6 +110,18 @@ public class PlayerMove extends Move {
         int oldFood = getPlayer().getPointsEaten();
         getPlayer().eat(foodEaten);
         assert getPlayer().getPointsEaten() == oldFood + foodEaten;
+        assert invariant();
+    }
+
+    @Override
+    public void undo() {
+        assert invariant();
+
+        int oldFood = getPlayer().getPointsEaten();
+        super.undo();
+        thePlayer.setLastDirection(lastDx, lastDy);
+
+        assert getPlayer().getPointsEaten() == oldFood - foodEaten;
         assert invariant();
     }
 

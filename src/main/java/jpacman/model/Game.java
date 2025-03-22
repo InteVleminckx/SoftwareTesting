@@ -72,6 +72,8 @@ public class Game {
         assert invariant();
     }
 
+    public Stack<Move> getMoveStack() { return moveStack; }
+
     /**
      * Check whether all relevant fields have been initialized.
      *
