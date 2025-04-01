@@ -72,4 +72,4 @@ def fuzz_manual(action_sequence):
 
 if __name__ == "__main__":
     # fuzz()
-    fuzz_manual("U")
+    fuzz_manual("LLLLRRRRQQQE")
