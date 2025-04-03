@@ -55,7 +55,7 @@ def check_exit_code(result_file, input_map, action_seq, code, message):
     message = f'"{message}"'
     map = f'"{input_map}"'
     result_file.write((f"{exit_codes.get(code, 'EXCEPTION ERROR')}\t"
-            f"{message if len(str(message)) > 0 else "Success"}\t"
+            f"{message if len(str(message)) > 0 else 'Success'}\t"
             f"{map}\t{action_seq}\n"))
 
 
@@ -72,4 +72,4 @@ def fuzz_manual(action_sequence):
 
 if __name__ == "__main__":
     # fuzz()
-    fuzz_manual("LLLLRRRRQQQE")
+    fuzz_manual("")
