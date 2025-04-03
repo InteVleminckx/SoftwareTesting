@@ -32,9 +32,23 @@ def generate_binary_map():
         f.write(input_map)
     return input_map
 
+def generate_valid_map():
+
+    valid_char_list = "PFW0M"
+    amount_of_rows = random.randint(1, 50)
+    length_row = random.randint(1, 50)
+    gen_map = ""
+    with open("fuzz.map", "w") as f:
+        # player, food, lengths most be identical, valid characters, valid file
+        for row in range(amount_of_rows):
+            gen_row = "".join(random.choices(valid_char_list, k=length_row))
+            f.write(gen_row)
+            gen_map += f"{gen_row}\n"
+
+    return gen_map
 
 def generate_action_sequence():
-    return "".join(random.choices("ESUDQWLR", k=random.randint(1, 50)))
+    return "S" + "".join(random.choices("ESUDQWLR", k=random.randint(1, 50))) + "E"
 
 
 def run_jpacman(action_seq, manual=False):
@@ -59,9 +73,9 @@ def check_exit_code(result_file, input_map, action_seq, code, message):
             f"{map}\t{action_seq}\n"))
 
 
-@fuzz_timer("MAX", 1000)
+@fuzz_timer("MAX", 10)
 def fuzz(result_file):
-    input_map = generate_binary_map()
+    input_map = generate_valid_map()
     action_seq = generate_action_sequence()
     code, message = run_jpacman(action_seq)
     check_exit_code(result_file, input_map, action_seq, code, message)
@@ -71,5 +85,5 @@ def fuzz_manual(action_sequence):
     print(f"Code: {code}\nMessage: {message}")
 
 if __name__ == "__main__":
-    # fuzz()
-    fuzz_manual("")
+    fuzz()
+    # fuzz_manual("&é(^")

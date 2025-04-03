@@ -18,4 +18,5 @@
 | Valid map, actions without a S                                          | /         | Game doesn't do anything, still waiting to start | WWWWWW<br/>W0FPMW<br/>WWWWWW | LLLLRRRQQQ      |
 | Valid map, actions without a S, with exit                               | 0         | Game stops                                       | WWWWWW<br/>W0FPMW<br/>WWWWWW | LLLLRRRQQQE     |
 | Valid map, no actions                                                   | 0         | Game just pops up                                | WWWWWW<br/>W0FPMW<br/>WWWWWW |                 |
-| Map with mismatched lines and one invalid character                     | 0         | Unknown character                                | WWWWWé<br/>W0FP<br/>WWWWWW   | SLE             |
+| Map with mismatched lines and one invalid character                     | 10        | **** Unknown character                           | WWWWWé<br/>W0FP<br/>WWWWWW   | SLE             |
+| Map with multiple players                                               | 10        | **** More than one player                        | WWWWWé<br/>W0FP<br/>WWWWWW   | SLE             |
