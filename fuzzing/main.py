@@ -34,16 +34,23 @@ def generate_binary_map():
 
 def generate_valid_map():
 
-    valid_char_list = "PFW0M"
+    valid_char_list = "FW0M"
     amount_of_rows = random.randint(1, 50)
     length_row = random.randint(1, 50)
     gen_map = ""
+    p_row = random.randint(0, amount_of_rows - 1)
+    p_col = random.randint(0, length_row - 1)
     with open("fuzz.map", "w") as f:
         # player, food, lengths most be identical, valid characters, valid file
+        # TODO: check food in string
         for row in range(amount_of_rows):
             gen_row = "".join(random.choices(valid_char_list, k=length_row))
+            if row == p_row:
+                # Replace a random position with 'P'
+                gen_row = gen_row[:p_col] + 'P' + gen_row[p_col + 1:]
+            gen_row += "\n"
             f.write(gen_row)
-            gen_map += f"{gen_row}\n"
+            gen_map +=  gen_row
 
     return gen_map
 
