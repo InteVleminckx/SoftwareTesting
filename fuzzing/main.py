@@ -4,6 +4,16 @@ import subprocess
 import sys
 import time
 
+MUTATE = False
+INPUT_MAP = ["WWWWWWW\n",
+             "W00000W\n",
+             "W00M00W\n",
+             "W0P000W\n",
+             "W000F0W\n",
+             "WWWWWWW\n"] # for mutation
+INPUT_ACTION_SEQ = "SUDDRRWE" # for mutation
+UNIQUE_CRASHES = {}
+
 def fuzz_timer(stop_option, value):
     def decorator(func):
         def wrapper():
@@ -61,7 +71,7 @@ def generate_valid_map():
 
 def mutate_map(valid_map):
     mutated_map = valid_map
-    all_chars = "FW0MP"
+    all_chars = "FW0M" # no player?
     num_mutations = random.randint(1, 10)
 
     for _ in range(num_mutations):
@@ -75,14 +85,14 @@ def mutate_map(valid_map):
 
 def mutate_action_sequence(action_seq):
     seq = list(action_seq)
-    valid = "SUDLRWQE"
+    valid_chars = "SUDLRWQE"
 
     for _ in range(random.randint(1, 5)):
-        seq[random.randint(1, len(seq) - 2)] = random.choice(valid) # replace char at random position
+        seq[random.randint(1, len(seq) - 2)] = random.choice(valid_chars) # replace char at random position
 
-    if random.random() < 0.5 and len(seq) < 15: # chance for insert at random position
-        seq.insert(random.randint(1, len(seq) - 1), random.choice(valid))
-    elif len(seq) > 3: # chance for delete at random position
+    if random.random() < 0.5: # chance for insert at random position
+        seq.insert(random.randint(1, len(seq) - 1), random.choice(valid_chars))
+    else: # chance for delete at random position
         seq.pop(random.randint(1, len(seq) - 2))
 
     return ''.join(seq)
@@ -114,14 +124,14 @@ def check_exit_code(result_file, input_map, action_seq, code, message, log_crash
             f"{message if len(str(message)) > 0 else 'Success'}\t"
             f"{map}\t{action_seq}\n"))
 
-MUTATE = True
-INPUT_MAP = ["WWWWWWW\n",
-             "W00000W\n",
-             "W00M00W\n",
-             "W0P000W\n",
-             "W000F0W\n",
-             "WWWWWWW\n"]
-INPUT_ACTION_SEQ = "SUDDRRWE"
+    # Store unique crashes
+    if code == 1 or code == 10:
+        if message not in UNIQUE_CRASHES:
+            UNIQUE_CRASHES[message] = 1
+            with open("unique_crashes.txt", "a") as f:
+                f.write(f"{message}\n")
+        else:
+            UNIQUE_CRASHES[message] += 1
 
 
 @fuzz_timer("TIME", 600)
@@ -144,4 +154,5 @@ def fuzz_manual(action_sequence):
 
 if __name__ == "__main__":
     fuzz()
+    print(UNIQUE_CRASHES)
     # fuzz_manual("SL")
