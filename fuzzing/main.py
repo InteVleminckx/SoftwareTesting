@@ -3,8 +3,9 @@ import random
 import subprocess
 import sys
 import time
+import copy
 
-MUTATE = False
+MUTATE = True
 INPUT_MAP = ["WWWWWWW\n",
              "W00000W\n",
              "W00M00W\n",
@@ -56,8 +57,7 @@ def generate_valid_map():
     p_row = random.randint(0, amount_of_rows - 1)
     p_col = random.randint(0, length_row - 1)
     with open("fuzz.map", "w") as f:
-        # player, food, lengths must be identical, valid characters, valid file
-        # TODO: check food in string
+
         for row in range(amount_of_rows):
             gen_row = "".join(random.choices(valid_char_list, k=length_row))
             if row == p_row:
@@ -70,7 +70,7 @@ def generate_valid_map():
     return gen_map
 
 def mutate_map(valid_map):
-    mutated_map = valid_map
+    mutated_map = copy.deepcopy(valid_map)
     all_chars = "FW0M" # no player?
     num_mutations = random.randint(1, 10)
 
@@ -153,10 +153,8 @@ def fuzz_manual(action_sequence):
     print(f"Code: {code}\nMessage: {message}")
 
 if __name__ == "__main__":
-    # fuzz()
-    # print(UNIQUE_CRASHES)
+    fuzz()
+    print(UNIQUE_CRASHES)
 
-    fuzz_manual("SWWWE")
-    # fuzz_manual("SLESL")
-    # fuzz_manual("SWWWW")
-    # fuzz_manual("ESL")
+    # fuzz_manual("S" + "WW"*1 + "E")
+
