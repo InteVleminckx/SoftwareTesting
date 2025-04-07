@@ -153,6 +153,10 @@ def fuzz_manual(action_sequence):
     print(f"Code: {code}\nMessage: {message}")
 
 if __name__ == "__main__":
-    fuzz()
-    print(UNIQUE_CRASHES)
-    # fuzz_manual("SL")
+    # fuzz()
+    # print(UNIQUE_CRASHES)
+
+    fuzz_manual("SWWWE")
+    # fuzz_manual("SLESL")
+    # fuzz_manual("SWWWW")
+    # fuzz_manual("ESL")
