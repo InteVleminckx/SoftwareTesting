@@ -56,7 +56,7 @@ def generate_valid_map():
     p_row = random.randint(0, amount_of_rows - 1)
     p_col = random.randint(0, length_row - 1)
     with open("fuzz.map", "w") as f:
-        # player, food, lengths most be identical, valid characters, valid file
+        # player, food, lengths must be identical, valid characters, valid file
         # TODO: check food in string
         for row in range(amount_of_rows):
             gen_row = "".join(random.choices(valid_char_list, k=length_row))
